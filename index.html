@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>HSK1 Chinese Characters - 150 Characters</title>
+<style>
+  * {
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+    line-height: 1.6;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eaeaea;
+  }
+  
+  h1 {
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #2c3e50;
+    font-size: 2.5rem;
+  }
+  
+  .subtitle {
+    color: #7f8c8d;
+    font-size: 1.1rem;
+  }
+  
+  .main-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-bottom: 30px;
+  }
+  
+  .character-section {
+    flex: 1;
+    min-width: 300px;
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+  
+  .input-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 25px;
+  }
+  
+  input {
+    width: 180px;
+    height: 50px;
+    font-size: 24px;
+    padding: 8px;
+    text-align: center;
+    border: 2px solid #3498db;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+  }
+  
+  input:focus {
+    outline: none;
+    border-color: #2980b9;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+  }
+  
+  #animation {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 25px;
+    min-height: 220px;
+  }
+  
+  #info {
+    text-align: left;
+    font-size: 16px;
+    line-height: 1.8;
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 4px solid #3498db;
+  }
+  
+  .suggestions-section {
+    flex: 2;
+    min-width: 300px;
+  }
+  
+  #hsk1-suggestions {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    gap: 12px;
+    margin-bottom: 25px;
+    max-height: 500px;
+    overflow-y: auto;
+    padding: 10px;
+  }
+  
+  .suggestion {
+    background-color: white;
+    border-radius: 10px;
+    padding: 15px 5px;
+    font-size: 24px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 2px solid transparent;
+  }
+  
+  .suggestion:hover {
+    background-color: #e3f2fd;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.12);
+    border-color: #3498db;
+  }
+  
+  .suggestion.active {
+    background-color: #3498db;
+    color: white;
+    border-color: #2980b9;
+  }
+  
+  .suggestion.highlighted {
+    background-color: #ffeb3b !important;
+    border-color: #ffc107 !important;
+    color: #333 !important;
+  }
+  
+  .suggestion.dimmed {
+    opacity: 0.3;
+  }
+  
+  .controls {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.2s;
+    flex: 1;
+    min-width: 140px;
+  }
+  
+  button:hover {
+    background-color: #2980b9;
+  }
+  
+  .progress-container {
+    margin-top: 30px;
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+  
+  .progress-bar {
+    height: 10px;
+    background-color: #ecf0f1;
+    border-radius: 5px;
+    margin: 10px 0;
+    overflow: hidden;
+  }
+  
+  .progress {
+    height: 100%;
+    background-color: #2ecc71;
+    width: 0%;
+    transition: width 0.5s ease;
+  }
+  
+  .progress-text {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #7f8c8d;
+  }
+  
+  footer {
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #eaeaea;
+    color: #7f8c8d;
+    font-size: 14px;
+  }
+  
+  @media (max-width: 768px) {
+    .main-content {
+      flex-direction: column;
+    }
+    
+    .character-section, .suggestions-section {
+      width: 100%;
+    }
+    
+    #hsk1-suggestions {
+      grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>HSK1 Chinese Characters</h1>
+      <p class="subtitle">Learn and practice all 150 essential characters for HSK Level 1</p>
+    </header>
+    
+    <div class="main-content">
+      <div class="character-section">
+        <div class="input-container">
+          <input id="charInput" maxlength="10" placeholder="输入汉字或拼音..." autocomplete="off" />
+        </div>
+        <div id="animation"></div>
+        <div id="info">
+          <p>Select a character to see its details, pronunciation, and example usage.</p>
+        </div>
+      </div>
+      
+      <div class="suggestions-section">
+        <h2>HSK1 Characters (150 Total)</h2>
+        <div id="hsk1-suggestions"></div>
+        
+        <div class="controls">
+          <button id="shuffleBtn">Shuffle Characters</button>
+          <button id="quizBtn">Start Quiz</button>
+          <button id="resetBtn">Reset Progress</button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="progress-container">
+      <h3>Learning Progress</h3>
+      <div class="progress-bar">
+        <div class="progress" id="progressBar"></div>
+      </div>
+      <div class="progress-text">
+        <span id="progressText">0/150 characters learned</span>
+        <span>HSK1 Mastery</span>
+      </div>
+    </div>
+    
+    <footer>
+      <p>Made with ❤️ for Chinese learners | Complete HSK1 Character Learning App</p>
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@2.0.2/dist/hanzi-writer.min.js"></script>
+  <script>
+    // Complete HSK1 data with all 150 characters
+    const hsk1Data = [
+      // 1-10
+      { char: "爱", pinyin: "ài", english: "love", spanish: "amar", words: ["爱情", "爱心"], sentence: {cn:"我爱你。", en:"I love you.", es:"Te amo."} },
+      { char: "八", pinyin: "bā", english: "eight", spanish: "ocho", words: ["八月", "八十"], sentence: {cn:"我八岁。", en:"I am eight years old.", es:"Tengo ocho años."} },
+      { char: "爸", pinyin: "bà", english: "father", spanish: "padre", words: ["爸爸", "爸妈"], sentence: {cn:"这是我爸爸。", en:"This is my father.", es:"Este es mi padre."} },
+      { char: "杯", pinyin: "bēi", english: "cup", spanish: "taza", words: ["杯子", "一杯"], sentence: {cn:"一杯水", en:"A cup of water", es:"Una taza de agua"} },
+      { char: "北", pinyin: "běi", english: "north", spanish: "norte", words: ["北京", "北方"], sentence: {cn:"北京在北京。", en:"Beijing is in the north.", es:"Pekín está en el norte."} },
+      { char: "本", pinyin: "běn", english: "book", spanish: "libro", words: ["本子", "日本"], sentence: {cn:"这是一本书。", en:"This is a book.", es:"Este es un libro."} },
+      { char: "不", pinyin: "bù", english: "not", spanish: "no", words: ["不是", "不好"], sentence: {cn:"我不去。", en:"I'm not going.", es:"No voy."} },
+      { char: "菜", pinyin: "cài", english: "vegetable", spanish: "verdura", words: ["菜市场", "点菜"], sentence: {cn:"我喜欢吃菜。", en:"I like to eat vegetables.", es:"Me gusta comer verduras."} },
+      { char: "茶", pinyin: "chá", english: "tea", spanish: "té", words: ["喝茶", "绿茶"], sentence: {cn:"我喜欢喝茶。", en:"I like drinking tea.", es:"Me gusta beber té."} },
+      { char: "吃", pinyin: "chī", english: "eat", spanish: "comer", words: ["吃饭", "好吃"], sentence: {cn:"我吃饭。", en:"I eat.", es:"Yo como."} },
+      
+      // 11-20
+      { char: "出", pinyin: "chū", english: "go out", spanish: "salir", words: ["出去", "出发"], sentence: {cn:"我出去了。", en:"I'm going out.", es:"Voy a salir."} },
+      { char: "打", pinyin: "dǎ", english: "hit", spanish: "golpear", words: ["打电话", "打开"], sentence: {cn:"我打电话。", en:"I make a phone call.", es:"Hago una llamada telefónica."} },
+      { char: "大", pinyin: "dà", english: "big", spanish: "grande", words: ["大学", "大家"], sentence: {cn:"这个很大。", en:"This is big.", es:"Esto es grande."} },
+      { char: "的", pinyin: "de", english: "of", spanish: "de", words: ["我的", "你的"], sentence: {cn:"这是我的书。", en:"This is my book.", es:"Este es mi libro."} },
+      { char: "点", pinyin: "diǎn", english: "point", spanish: "punto", words: ["一点", "几点"], sentence: {cn:"现在几点？", en:"What time is it now?", es:"¿Qué hora es ahora?"} },
+      { char: "电", pinyin: "diàn", english: "electricity", spanish: "electricidad", words: ["电话", "电视"], sentence: {cn:"请打电话。", en:"Please make a phone call.", es:"Por favor haz una llamada telefónica."} },
+      { char: "店", pinyin: "diàn", english: "shop", spanish: "tienda", words: ["商店", "书店"], sentence: {cn:"我去商店。", en:"I go to the shop.", es:"Voy a la tienda."} },
+      { char: "东", pinyin: "dōng", english: "east", spanish: "este", words: ["东西", "东方"], sentence: {cn:"太阳从东方升起。", en:"The sun rises in the east.", es:"El sol sale por el este."} },
+      { char: "动", pinyin: "dòng", english: "move", spanish: "mover", words: ["动物", "运动"], sentence: {cn:"我喜欢运动。", en:"I like sports.", es:"Me gusta el deporte."} },
+      { char: "都", pinyin: "dōu", english: "all", spanish: "todo", words: ["都是", "都有"], sentence: {cn:"我们都是学生。", en:"We are all students.", es:"Todos somos estudiantes."} },
+      
+      // 21-30
+      { char: "读", pinyin: "dú", english: "read", spanish: "leer", words: ["读书", "读者"], sentence: {cn:"我读书。", en:"I read books.", es:"Leo libros."} },
+      { char: "对", pinyin: "duì", english: "correct", spanish: "correcto", words: ["对", "对不起"], sentence: {cn:"你说得对。", en:"What you said is correct.", es:"Lo que dijiste es correcto."} },
+      { char: "多", pinyin: "duō", english: "many", spanish: "muchos", words: ["多少", "很多"], sentence: {cn:"很多人", en:"Many people", es:"Mucha gente"} },
+      { char: "儿", pinyin: "ér", english: "child", spanish: "niño", words: ["儿子", "儿童"], sentence: {cn:"这是我的儿子。", en:"This is my son.", es:"Este es mi hijo."} },
+      { char: "二", pinyin: "èr", english: "two", spanish: "dos", words: ["二", "二十"], sentence: {cn:"二个人", en:"Two people", es:"Dos personas"} },
+      { char: "饭", pinyin: "fàn", english: "meal", spanish: "comida", words: ["米饭", "吃饭"], sentence: {cn:"我吃饭了。", en:"I'm eating.", es:"Estoy comiendo."} },
+      { char: "房", pinyin: "fáng", english: "house", spanish: "casa", words: ["房间", "房子"], sentence: {cn:"这是我的房间。", en:"This is my room.", es:"Esta es mi habitación."} },
+      { char: "飞", pinyin: "fēi", english: "fly", spanish: "volar", words: ["飞机", "飞行"], sentence: {cn:"鸟在飞。", en:"The bird is flying.", es:"El pájaro está volando."} },
+      { char: "分", pinyin: "fēn", english: "minute", spanish: "minuto", words: ["分钟", "分"], sentence: {cn:"一分钟", en:"One minute", es:"Un minuto"} },
+      { char: "高", pinyin: "gāo", english: "high", spanish: "alto", words: ["高度", "高山"], sentence: {cn:"这座山很高。", en:"This mountain is high.", es:"Esta montaña es alta."} },
+      
+      // 31-40
+      { char: "个", pinyin: "gè", english: "measure word", spanish: "clasificador", words: ["这个", "个人"], sentence: {cn:"一个人", en:"One person", es:"Una persona"} },
+      { char: "给", pinyin: "gěi", english: "give", spanish: "dar", words: ["给我", "给你"], sentence: {cn:"给我一本书。", en:"Give me a book.", es:"Dame un libro."} },
+      { char: "工", pinyin: "gōng", english: "work", spanish: "trabajo", words: ["工作", "工人"], sentence: {cn:"我工作。", en:"I work.", es:"Trabajo."} },
+      { char: "狗", pinyin: "gǒu", english: "dog", spanish: "perro", words: ["狗", "小狗"], sentence: {cn:"这是一只狗。", en:"This is a dog.", es:"Este es un perro."} },
+      { char: "国", pinyin: "guó", english: "country", spanish: "país", words: ["国家", "中国"], sentence: {cn:"我是中国人。", en:"I am Chinese.", es:"Soy chino."} },
+      { char: "过", pinyin: "guò", english: "pass", spanish: "pasar", words: ["过去", "过来"], sentence: {cn:"我过去看看。", en:"I'll go over and take a look.", es:"Voy a pasar y echar un vistazo."} },
+      { char: "还", pinyin: "hái", english: "still", spanish: "todavía", words: ["还是", "还有"], sentence: {cn:"我还有钱。", en:"I still have money.", es:"Todavía tengo dinero."} },
+      { char: "好", pinyin: "hǎo", english: "good", spanish: "bueno", words: ["你好", "好吃"], sentence: {cn:"你好！", en:"Hello!", es:"¡Hola!"} },
+      { char: "喝", pinyin: "hē", english: "drink", spanish: "beber", words: ["喝水", "喝茶"], sentence: {cn:"我喝水。", en:"I drink water.", es:"Yo bebo agua."} },
+      { char: "和", pinyin: "hé", english: "and", spanish: "y", words: ["和平", "和好"], sentence: {cn:"我和你", en:"You and I", es:"Tú y yo"} },
+      
+      // 41-50
+      { char: "很", pinyin: "hěn", english: "very", spanish: "muy", words: ["很好", "很多"], sentence: {cn:"我很好。", en:"I'm very good.", es:"Estoy muy bien."} },
+      { char: "后", pinyin: "hòu", english: "after", spanish: "después", words: ["后面", "以后"], sentence: {cn:"请向后走。", en:"Please go backward.", es:"Por favor ve hacia atrás."} },
+      { char: "话", pinyin: "huà", english: "speech", spanish: "habla", words: ["说话", "电话"], sentence: {cn:"请说话。", en:"Please speak.", es:"Por favor habla."} },
+      { char: "回", pinyin: "huí", english: "return", spanish: "volver", words: ["回来", "回家"], sentence: {cn:"我回家了。", en:"I'm going home.", es:"Voy a casa."} },
+      { char: "会", pinyin: "huì", english: "can", spanish: "poder", words: ["会", "会议"], sentence: {cn:"我会说中文。", en:"I can speak Chinese.", es:"Puedo hablar chino."} },
+      { char: "机", pinyin: "jī", english: "machine", spanish: "máquina", words: ["飞机", "手机"], sentence: {cn:"这是手机。", en:"This is a mobile phone.", es:"Esto es un teléfono móvil."} },
+      { char: "几", pinyin: "jǐ", english: "how many", spanish: "cuántos", words: ["几个", "几点"], sentence: {cn:"几个人？", en:"How many people?", es:"¿Cuántas personas?"} },
+      { char: "家", pinyin: "jiā", english: "home", spanish: "hogar", words: ["家庭", "回家"], sentence: {cn:"我回家了。", en:"I'm going home.", es:"Voy a casa."} },
+      { char: "见", pinyin: "jiàn", english: "see", spanish: "ver", words: ["见面", "看见"], sentence: {cn:"明天见。", en:"See you tomorrow.", es:"Hasta mañana."} },
+      { char: "叫", pinyin: "jiào", english: "call", spanish: "llamar", words: ["叫", "名字"], sentence: {cn:"你叫什么名字？", en:"What is your name?", es:"¿Cómo te llamas?"} },
+      
+      // 51-60
+      { char: "今", pinyin: "jīn", english: "today", spanish: "hoy", words: ["今天", "今年"], sentence: {cn:"今天天气好。", en:"The weather is good today.", es:"Hoy hace buen tiempo."} },
+      { char: "开", pinyin: "kāi", english: "open", spanish: "abrir", words: ["开门", "开始"], sentence: {cn:"请开门。", en:"Please open the door.", es:"Por favor abre la puerta."} },
+      { char: "看", pinyin: "kàn", english: "look", spanish: "mirar", words: ["看见", "看书"], sentence: {cn:"你看书吗？", en:"Do you read books?", es:"¿Lees libros?"} },
+      { char: "块", pinyin: "kuài", english: "piece", spanish: "pedazo", words: ["一块钱", "石块"], sentence: {cn:"一块钱。", en:"One yuan.", es:"Un yuan."} },
+      { char: "来", pinyin: "lái", english: "come", spanish: "venir", words: ["回来", "来自"], sentence: {cn:"你来吗？", en:"Are you coming?", es:"¿Vienes?"} },
+      { char: "老", pinyin: "lǎo", english: "old", spanish: "viejo", words: ["老人", "老师"], sentence: {cn:"他是我的老师。", en:"He is my teacher.", es:"Él es mi profesor."} },
+      { char: "了", pinyin: "le", english: "particle", spanish: "partícula", words: ["完了", "好了"], sentence: {cn:"我吃了。", en:"I ate.", es:"He comido."} },
+      { char: "里", pinyin: "lǐ", english: "inside", spanish: "dentro", words: ["里面", "公里"], sentence: {cn:"请到里面来。", en:"Please come inside.", es:"Por favor ven dentro."} },
+      { char: "零", pinyin: "líng", english: "zero", spanish: "cero", words: ["零", "零点"], sentence: {cn:"现在是零点。", en:"It's zero hour.", es:"Es la hora cero."} },
+      { char: "六", pinyin: "liù", english: "six", spanish: "seis", words: ["六", "六十"], sentence: {cn:"六个人", en:"Six people", es:"Seis personas"} },
+      
+      // 61-70
+      { char: "妈", pinyin: "mā", english: "mother", spanish: "madre", words: ["妈妈", "爸妈"], sentence: {cn:"这是我妈妈。", en:"This is my mother.", es:"Esta es mi madre."} },
+      { char: "吗", pinyin: "ma", english: "question particle", spanish: "partícula interrogativa", words: ["好吗", "对吗"], sentence: {cn:"你好吗？", en:"How are you?", es:"¿Cómo estás?"} },
+      { char: "买", pinyin: "mǎi", english: "buy", spanish: "comprar", words: ["买东西", "买书"], sentence: {cn:"我买书。", en:"I buy books.", es:"Compro libros."} },
+      { char: "猫", pinyin: "māo", english: "cat", spanish: "gato", words: ["猫", "小猫"], sentence: {cn:"这是一只猫。", en:"This is a cat.", es:"Este es un gato."} },
+      { char: "没", pinyin: "méi", english: "not", spanish: "no", words: ["没有", "没"], sentence: {cn:"我没有。", en:"I don't have.", es:"No tengo."} },
+      { char: "每", pinyin: "měi", english: "every", spanish: "cada", words: ["每天", "每个"], sentence: {cn:"我每天学习。", en:"I study every day.", es:"Estudio cada día."} },
+      { char: "门", pinyin: "mén", english: "door", spanish: "puerta", words: ["门口", "开门"], sentence: {cn:"请开门。", en:"Please open the door.", es:"Por favor abre la puerta."} },
+      { char: "面", pinyin: "miàn", english: "face", spanish: "cara", words: ["面包", "面条"], sentence: {cn:"我吃面包。", en:"I eat bread.", es:"Como pan."} },
+      { char: "明", pinyin: "míng", english: "bright", spanish: "brillante", words: ["明天", "明白"], sentence: {cn:"明天见。", en:"See you tomorrow.", es:"Hasta mañana."} },
+      { char: "哪", pinyin: "nǎ", english: "which", spanish: "cuál", words: ["哪里", "哪个"], sentence: {cn:"你在哪里？", en:"Where are you?", es:"¿Dónde estás?"} },
+      
+      // 71-80
+      { char: "那", pinyin: "nà", english: "that", spanish: "ese/esa", words: ["那个", "那里"], sentence: {cn:"那是什么？", en:"What is that?", es:"¿Qué es eso?"} },
+      { char: "男", pinyin: "nán", english: "man", spanish: "hombre", words: ["男人", "男孩"], sentence: {cn:"他是一个男人。", en:"He is a man.", es:"Él es un hombre."} },
+      { char: "你", pinyin: "nǐ", english: "you", spanish: "tú", words: ["你好", "你们"], sentence: {cn:"你好吗？", en:"How are you?", es:"¿Cómo estás?"} },
+      { char: "年", pinyin: "nián", english: "year", spanish: "año", words: ["今年", "去年"], sentence: {cn:"今年是2023年。", en:"This year is 2023.", es:"Este año es 2023."} },
+      { char: "女", pinyin: "nǚ", english: "woman", spanish: "mujer", words: ["女人", "女儿"], sentence: {cn:"她是一个女人。", en:"She is a woman.", es:"Ella es una mujer."} },
+      { char: "朋", pinyin: "péng", english: "friend", spanish: "amigo", words: ["朋友", "朋"], sentence: {cn:"他是我的朋友。", en:"He is my friend.", es:"Él es mi amigo."} },
+      { char: "七", pinyin: "qī", english: "seven", spanish: "siete", words: ["七", "七十"], sentence: {cn:"七个人", en:"Seven people", es:"Siete personas"} },
+      { char: "起", pinyin: "qǐ", english: "rise", spanish: "levantarse", words: ["起床", "起来"], sentence: {cn:"我起床。", en:"I get up.", es:"Me levanto."} },
+      { char: "千", pinyin: "qiān", english: "thousand", spanish: "mil", words: ["一千", "千万"], sentence: {cn:"一千元", en:"One thousand yuan", es:"Mil yuanes"} },
+      { char: "钱", pinyin: "qián", english: "money", spanish: "dinero", words: ["有钱", "花钱"], sentence: {cn:"我有钱。", en:"I have money.", es:"Tengo dinero."} },
+      
+      // 81-90
+      { char: "请", pinyin: "qǐng", english: "please", spanish: "por favor", words: ["请", "请问"], sentence: {cn:"请坐。", en:"Please sit down.", es:"Por favor siéntate."} },
+      { char: "去", pinyin: "qù", english: "go", spanish: "ir", words: ["回去", "去年"], sentence: {cn:"我去学校。", en:"I go to school.", es:"Voy a la escuela."} },
+      { char: "人", pinyin: "rén", english: "person", spanish: "persona", words: ["人们", "大人"], sentence: {cn:"我是一个人。", en:"I am a person.", es:"Soy una persona."} },
+      { char: "认", pinyin: "rèn", english: "recognize", spanish: "reconocer", words: ["认识", "认真"], sentence: {cn:"我认识他。", en:"I know him.", es:"Lo conozco."} },
+      { char: "日", pinyin: "rì", english: "day", spanish: "día", words: ["日本", "生日"], sentence: {cn:"今天是几号？", en:"What date is today?", es:"¿Qué fecha es hoy?"} },
+      { char: "三", pinyin: "sān", english: "three", spanish: "tres", words: ["三", "三十"], sentence: {cn:"三个人", en:"Three people", es:"Tres personas"} },
+      { char: "商", pinyin: "shāng", english: "business", spanish: "negocio", words: ["商店", "商业"], sentence: {cn:"我去商店。", en:"I go to the shop.", es:"Voy a la tienda."} },
+      { char: "上", pinyin: "shàng", english: "up", spanish: "arriba", words: ["上面", "上学"], sentence: {cn:"书在桌子上。", en:"The book is on the table.", es:"El libro está en la mesa."} },
+      { char: "少", pinyin: "shǎo", english: "few", spanish: "pocos", words: ["多少", "很少"], sentence: {cn:"很少人", en:"Few people", es:"Poca gente"} },
+      { char: "谁", pinyin: "shéi", english: "who", spanish: "quién", words: ["谁", "是谁"], sentence: {cn:"你是谁？", en:"Who are you?", es:"¿Quién eres?"} },
+      
+      // 91-100
+      { char: "什", pinyin: "shén", english: "what", spanish: "qué", words: ["什么", "为什么"], sentence: {cn:"这是什么？", en:"What is this?", es:"¿Qué es esto?"} },
+      { char: "生", pinyin: "shēng", english: "student", spanish: "estudiante", words: ["学生", "生活"], sentence: {cn:"我是一个学生。", en:"I am a student.", es:"Soy un estudiante."} },
+      { char: "十", pinyin: "shí", english: "ten", spanish: "diez", words: ["十", "二十"], sentence: {cn:"十个人", en:"Ten people", es:"Diez personas"} },
+      { char: "时", pinyin: "shí", english: "time", spanish: "tiempo", words: ["时间", "时候"], sentence: {cn:"现在是什么时候？", en:"What time is it now?", es:"¿Qué hora es ahora?"} },
+      { char: "是", pinyin: "shì", english: "to be", spanish: "ser/estar", words: ["不是", "是不是"], sentence: {cn:"我是老师。", en:"I am a teacher.", es:"Soy profesor."} },
+      { char: "书", pinyin: "shū", english: "book", spanish: "libro", words: ["书本", "书店"], sentence: {cn:"这是一本书。", en:"This is a book.", es:"Este es un libro."} },
+      { char: "水", pinyin: "shuǐ", english: "water", spanish: "agua", words: ["水果", "喝水"], sentence: {cn:"我要喝水。", en:"I want to drink water.", es:"Quiero beber agua."} },
+      { char: "说", pinyin: "shuō", english: "speak", spanish: "hablar", words: ["说话", "说明"], sentence: {cn:"你说中文吗？", en:"Do you speak Chinese?", es:"¿Hablas chino?"} },
+      { char: "四", pinyin: "sì", english: "four", spanish: "cuatro", words: ["四", "四十"], sentence: {cn:"四个人", en:"Four people", es:"Cuatro personas"} },
+      { char: "岁", pinyin: "suì", english: "year (age)", spanish: "año (edad)", words: ["岁", "几岁"], sentence: {cn:"你几岁？", en:"How old are you?", es:"¿Cuántos años tienes?"} },
+      
+      // 101-110
+      { char: "他", pinyin: "tā", english: "he", spanish: "él", words: ["她", "他们"], sentence: {cn:"他很好。", en:"He is good.", es:"Él está bien."} },
+      { char: "她", pinyin: "tā", english: "she", spanish: "ella", words: ["她们", "她家"], sentence: {cn:"她是我朋友。", en:"She is my friend.", es:"Ella es mi amiga."} },
+      { char: "太", pinyin: "tài", english: "too", spanish: "demasiado", words: ["太", "太阳"], sentence: {cn:"太好了！", en:"Too good!", es:"¡Demasiado bueno!"} },
+      { char: "天", pinyin: "tiān", english: "day", spanish: "día", words: ["今天", "天气"], sentence: {cn:"今天天气很好。", en:"The weather is good today.", es:"Hoy hace buen tiempo."} },
+      { char: "听", pinyin: "tīng", english: "listen", spanish: "escuchar", words: ["听音乐", "听见"], sentence: {cn:"我听音乐。", en:"I listen to music.", es:"Escucho música."} },
+      { char: "同", pinyin: "tóng", english: "same", spanish: "mismo", words: ["同学", "同意"], sentence: {cn:"我们是同学。", en:"We are classmates.", es:"Somos compañeros de clase."} },
+      { char: "外", pinyin: "wài", english: "outside", spanish: "fuera", words: ["外面", "外国"], sentence: {cn:"请到外面去。", en:"Please go outside.", es:"Por favor ve afuera."} },
+      { char: "玩", pinyin: "wán", english: "play", spanish: "jugar", words: ["玩", "玩具"], sentence: {cn:"我喜欢玩。", en:"I like to play.", es:"Me gusta jugar."} },
+      { char: "晚", pinyin: "wǎn", english: "late", spanish: "tarde", words: ["晚上", "晚安"], sentence: {cn:"晚上好。", en:"Good evening.", es:"Buenas noches."} },
+      { char: "万", pinyin: "wàn", english: "ten thousand", spanish: "diez mil", words: ["一万", "千万"], sentence: {cn:"一万元", en:"Ten thousand yuan", es:"Diez mil yuanes"} },
+      
+      // 111-120
+      { char: "王", pinyin: "wáng", english: "king", spanish: "rey", words: ["王", "国王"], sentence: {cn:"他是国王。", en:"He is the king.", es:"Él es el rey."} },
+      { char: "为", pinyin: "wèi", english: "for", spanish: "para", words: ["为什么", "为了"], sentence: {cn:"为什么？", en:"Why?", es:"¿Por qué?"} },
+      { char: "我", pinyin: "wǒ", english: "I", spanish: "yo", words: ["我们", "自己"], sentence: {cn:"我是学生。", en:"I am a student.", es:"Soy estudiante."} },
+      { char: "五", pinyin: "wǔ", english: "five", spanish: "cinco", words: ["五", "五十"], sentence: {cn:"五个人", en:"Five people", es:"Cinco personas"} },
+      { char: "午", pinyin: "wǔ", english: "noon", spanish: "mediodía", words: ["中午", "下午"], sentence: {cn:"中午好。", en:"Good afternoon.", es:"Buenas tardes."} },
+      { char: "西", pinyin: "xī", english: "west", spanish: "oeste", words: ["西方", "西"], sentence: {cn:"太阳从西方落下。", en:"The sun sets in the west.", es:"El sol se pone por el oeste."} },
+      { char: "习", pinyin: "xí", english: "practice", spanish: "practicar", words: ["学习", "习惯"], sentence: {cn:"我学习中文。", en:"I study Chinese.", es:"Estudio chino."} },
+      { char: "喜", pinyin: "xǐ", english: "like", spanish: "gustar", words: ["喜欢", "喜剧"], sentence: {cn:"我喜欢你。", en:"I like you.", es:"Me gustas."} },
+      { char: "下", pinyin: "xià", english: "down", spanish: "abajo", words: ["下面", "下午"], sentence: {cn:"我在下面。", en:"I am below.", es:"Estoy abajo."} },
+      { char: "先", pinyin: "xiān", english: "first", spanish: "primero", words: ["先生", "先"], sentence: {cn:"先生，你好。", en:"Hello, sir.", es:"Hola, señor."} },
+      
+      // 121-130
+      { char: "想", pinyin: "xiǎng", english: "want", spanish: "querer", words: ["想", "想法"], sentence: {cn:"我想去中国。", en:"I want to go to China.", es:"Quiero ir a China."} },
+      { char: "小", pinyin: "xiǎo", english: "small", spanish: "pequeño", words: ["小孩", "小时"], sentence: {cn:"这个很小。", en:"This is small.", es:"Esto es pequeño."} },
+      { char: "校", pinyin: "xiào", english: "school", spanish: "escuela", words: ["学校", "校长"], sentence: {cn:"我在学校。", en:"I am at school.", es:"Estoy en la escuela."} },
+      { char: "些", pinyin: "xiē", english: "some", spanish: "algunos", words: ["一些", "这些"], sentence: {cn:"这些书", en:"These books", es:"Estos libros"} },
+      { char: "写", pinyin: "xiě", english: "write", spanish: "escribir", words: ["写字", "写作"], sentence: {cn:"我写字。", en:"I write characters.", es:"Escribo caracteres."} },
+      { char: "谢", pinyin: "xiè", english: "thank", spanish: "agradecer", words: ["谢谢", "感谢"], sentence: {cn:"谢谢你。", en:"Thank you.", es:"Gracias."} },
+      { char: "新", pinyin: "xīn", english: "new", spanish: "nuevo", words: ["新", "新年"], sentence: {cn:"这是一本新书。", en:"This is a new book.", es:"Este es un libro nuevo."} },
+      { char: "姓", pinyin: "xìng", english: "surname", spanish: "apellido", words: ["姓名", "姓氏"], sentence: {cn:"你姓什么？", en:"What is your surname?", es:"¿Cuál es tu apellido?"} },
+      { char: "学", pinyin: "xué", english: "study", spanish: "estudiar", words: ["学习", "学生"], sentence: {cn:"我学习中文。", en:"I study Chinese.", es:"Estudio chino."} },
+      { char: "一", pinyin: "yī", english: "one", spanish: "uno", words: ["一", "一个"], sentence: {cn:"一个人", en:"One person", es:"Una persona"} },
+      
+      // 131-140
+      { char: "衣", pinyin: "yī", english: "clothing", spanish: "ropa", words: ["衣服", "上衣"], sentence: {cn:"这是我的衣服。", en:"These are my clothes.", es:"Esta es mi ropa."} },
+      { char: "医", pinyin: "yī", english: "medical", spanish: "médico", words: ["医院", "医生"], sentence: {cn:"我去医院。", en:"I go to the hospital.", es:"Voy al hospital."} },
+      { char: "椅", pinyin: "yǐ", english: "chair", spanish: "silla", words: ["椅子", "桌椅"], sentence: {cn:"请坐椅子。", en:"Please sit on the chair.", es:"Por favor siéntate en la silla."} },
+      { char: "有", pinyin: "yǒu", english: "have", spanish: "tener", words: ["没有", "有人"], sentence: {cn:"我有一本书。", en:"I have a book.", es:"Tengo un libro."} },
+      { char: "右", pinyin: "yòu", english: "right", spanish: "derecha", words: ["右边", "右"], sentence: {cn:"请向右转。", en:"Please turn right.", es:"Por favor gira a la derecha."} },
+      { char: "鱼", pinyin: "yú", english: "fish", spanish: "pez", words: ["鱼", "金鱼"], sentence: {cn:"这是一条鱼。", en:"This is a fish.", es:"Este es un pez."} },
+      { char: "语", pinyin: "yǔ", english: "language", spanish: "idioma", words: ["语言", "汉语"], sentence: {cn:"我会说汉语。", en:"I can speak Chinese.", es:"Puedo hablar chino."} },
+      { char: "元", pinyin: "yuán", english: "yuan", spanish: "yuan", words: ["一元", "美元"], sentence: {cn:"十元钱。", en:"Ten yuan.", es:"Diez yuanes."} },
+      { char: "月", pinyin: "yuè", english: "month", spanish: "mes", words: ["月亮", "月"], sentence: {cn:"一个月", en:"One month", es:"Un mes"} },
+      { char: "再", pinyin: "zài", english: "again", spanish: "otra vez", words: ["再见", "再"], sentence: {cn:"再见！", en:"Goodbye!", es:"¡Adiós!"} },
+      
+      // 141-150
+      { char: "在", pinyin: "zài", english: "at", spanish: "en", words: ["现在", "在家"], sentence: {cn:"我在学校。", en:"I am at school.", es:"Estoy en la escuela."} },
+      { char: "早", pinyin: "zǎo", english: "early", spanish: "temprano", words: ["早上", "早安"], sentence: {cn:"早上好。", en:"Good morning.", es:"Buenos días."} },
+      { char: "怎", pinyin: "zěn", english: "how", spanish: "cómo", words: ["怎么", "怎样"], sentence: {cn:"怎么去？", en:"How to go?", es:"¿Cómo ir?"} },
+      { char: "站", pinyin: "zhàn", english: "station", spanish: "estación", words: ["车站", "站起来"], sentence: {cn:"我在车站。", en:"I'm at the station.", es:"Estoy en la estación."} },
+      { char: "长", pinyin: "zhǎng", english: "grow", spanish: "crecer", words: ["长大", "长"], sentence: {cn:"我长大了。", en:"I grew up.", es:"Crecí."} },
+      { char: "这", pinyin: "zhè", english: "this", spanish: "este/esta", words: ["这个", "这里"], sentence: {cn:"这是什么？", en:"What is this?", es:"¿Qué es esto?"} },
+      { char: "着", pinyin: "zhe", english: "ing", spanish: "ando/iendo", words: ["着", "看着"], sentence: {cn:"我看着。", en:"I'm looking.", es:"Estoy mirando."} },
+      { char: "真", pinyin: "zhēn", english: "true", spanish: "verdadero", words: ["真", "真实"], sentence: {cn:"这是真的。", en:"This is true.", es:"Esto es verdad."} },
+      { char: "中", pinyin: "zhōng", english: "middle", spanish: "medio", words: ["中国", "中文"], sentence: {cn:"我在中国。", en:"I am in China.", es:"Estoy en China."} },
+      { char: "住", pinyin: "zhù", english: "live", spanish: "vivir", words: ["住", "住房"], sentence: {cn:"我住在北京。", en:"I live in Beijing.", es:"Vivo en Pekín."} }
+    ];
+
+    // DOM elements
+    const container = document.getElementById("hsk1-suggestions");
+    const input = document.getElementById("charInput");
+    const animation = document.getElementById("animation");
+    const info = document.getElementById("info");
+    const shuffleBtn = document.getElementById("shuffleBtn");
+    const quizBtn = document.getElementById("quizBtn");
+    const resetBtn = document.getElementById("resetBtn");
+    const progressBar = document.getElementById("progressBar");
+    const progressText = document.getElementById("progressText");
+    
+    let writer;
+    let learnedChars = JSON.parse(localStorage.getItem('learnedChars')) || [];
+    let currentSearchMatches = [];
+    
+    // Initialize the app
+    function init() {
+      createCharacterButtons();
+      updateProgress();
+      
+      // Event listeners
+      input.addEventListener("input", handleInput);
+      shuffleBtn.addEventListener("click", shuffleCharacters);
+      quizBtn.addEventListener("click", startQuiz);
+      resetBtn.addEventListener("click", resetProgress);
+      
+      // Focus on input field
+      input.focus();
+    }
+    
+    // Create all character buttons
+    function createCharacterButtons(matches = []) {
+      container.innerHTML = "";
+      
+      // If no matches provided, show all characters
+      const charactersToShow = matches.length > 0 ? matches : hsk1Data;
+      
+      charactersToShow.forEach(data => {
+        const div = document.createElement("div");
+        div.className = "suggestion";
+        div.textContent = data.char;
+        
+        // Mark learned characters
+        if (learnedChars.includes(data.char)) {
+          div.classList.add("active");
+        }
+        
+        // If we're showing search results, highlight matched characters
+        if (matches.length > 0) {
+          div.classList.add("highlighted");
+        }
+        
+        div.addEventListener("click", () => {
+          input.value = data.char;
+          showCharacter(data.char);
+          showInfo(data.char);
+          markAsLearned(data.char);
+        });
+        
+        container.appendChild(div);
+      });
+      
+      // If we're showing search results, dim non-matching characters
+      if (matches.length > 0) {
+        hsk1Data.forEach(data => {
+          if (!matches.some(match => match.char === data.char)) {
+            const buttons = document.querySelectorAll('.suggestion');
+            buttons.forEach(btn => {
+              if (btn.textContent === data.char) {
+                btn.classList.add('dimmed');
+              }
+            });
+          }
+        });
+      }
+    }
+    
+    // Handle input field changes
+    function handleInput(e) {
+      const inputText = e.target.value.trim();
+      if (inputText) {
+        // Check if input is Chinese character or pinyin
+        const isPinyin = /^[a-zA-Z]/.test(inputText);
+        
+        if (isPinyin) {
+          // Pinyin search
+          searchByPinyin(inputText);
+        } else {
+          // Character search (original functionality)
+          showCharacter(inputText);
+          showInfo(inputText);
+          markAsLearned(inputText);
+          // Reset to show all characters
+          createCharacterButtons();
+        }
+      } else {
+        // Clear highlights when input is empty
+        createCharacterButtons();
+      }
+    }
+    
+    // Normalize pinyin by removing tones and converting to lowercase
+    function normalizePinyin(pinyin) {
+      const toneMap = {
+        'ā': 'a', 'á': 'a', 'ǎ': 'a', 'à': 'a',
+        'ē': 'e', 'é': 'e', 'ě': 'e', 'è': 'e',
+        'ī': 'i', 'í': 'i', 'ǐ': 'i', 'ì': 'i',
+        'ō': 'o', 'ó': 'o', 'ǒ': 'o', 'ò': 'o',
+        'ū': 'u', 'ú': 'u', 'ǔ': 'u', 'ù': 'u',
+        'ǖ': 'ü', 'ǘ': 'ü', 'ǚ': 'ü', 'ǜ': 'ü'
+      };
+      
+      return pinyin.toLowerCase().split('').map(char => toneMap[char] || char).join('').replace(/[1-5]/g, '');
+    }
+    
+    // Search by pinyin - FIXED VERSION
+    function searchByPinyin(pinyinInput) {
+      // Normalize input
+      const searchTerm = normalizePinyin(pinyinInput);
+      
+      // Find all matching characters
+      const matches = hsk1Data.filter(data => {
+        const pinyinNorm = normalizePinyin(data.pinyin);
+        return pinyinNorm.includes(searchTerm);
+      });
+      
+      // Sort matches by relevance
+      matches.sort((a, b) => {
+        const aPinyin = normalizePinyin(a.pinyin);
+        const bPinyin = normalizePinyin(b.pinyin);
+        
+        // Exact matches first
+        if (aPinyin === searchTerm && bPinyin !== searchTerm) return -1;
+        if (bPinyin === searchTerm && aPinyin !== searchTerm) return 1;
+        
+        // Then by starts with
+        const aStarts = aPinyin.startsWith(searchTerm);
+        const bStarts = bPinyin.startsWith(searchTerm);
+        if (aStarts && !bStarts) return -1;
+        if (bStarts && !aStarts) return 1;
+        
+        // Then by length (shorter pinyin first)
+        return aPinyin.length - bPinyin.length;
+      });
+      
+      if (matches.length > 0) {
+        // Show first matching character
+        const firstMatch = matches[0];
+        showCharacter(firstMatch.char);
+        showInfo(firstMatch.char);
+        
+        // Update character buttons to show matches
+        createCharacterButtons(matches);
+        currentSearchMatches = matches;
+      } else {
+        // No matching character found
+        animation.innerHTML = "";
+        info.innerHTML = `<p>No character found for pinyin "${pinyinInput}". Try another pinyin.</p>`;
+        createCharacterButtons();
+      }
+    }
+    
+    // Render stroke animation
+    function showCharacter(char) {
+      animation.innerHTML = "";
+      writer = HanziWriter.create(animation, char, {
+        width: 200,
+        height: 200,
+        padding: 10,
+        showOutline: true,
+        showCharacter: false,
+        strokeColor: "#3498db",
+        radicalColor: "#e74c3c",
+        highlightColor: "#f1c40f"
+      });
+      writer.animateCharacter();
+    }
+    
+    // Show character information
+    function showInfo(char) {
+      const data = hsk1Data.find(d => d.char === char);
+      if (!data) {
+        info.innerHTML = `<p>Character "${char}" not found in HSK1 database.</p>`;
+        return;
+      }
+      
+      info.innerHTML = `
+        <h3>${data.char}</h3>
+        <p><b>Pinyin:</b> ${data.pinyin}</p>
+        <p><b>English:</b> ${data.english}</p>
+        <p><b>Spanish:</b> ${data.spanish}</p>
+        <p><b>Words:</b> ${data.words.join(", ")}</p>
+        <p><b>Example:</b> ${data.sentence.cn}</p>
+        <p><b>English:</b> ${data.sentence.en}</p>
+        <p><b>Spanish:</b> ${data.sentence.es}</p>
+      `;
+    }
+    
+    // Mark a character as learned
+    function markAsLearned(char) {
+      if (!learnedChars.includes(char)) {
+        learnedChars.push(char);
+        localStorage.setItem('learnedChars', JSON.stringify(learnedChars));
+        updateProgress();
+        
+        // Update button appearance
+        const buttons = document.querySelectorAll('.suggestion');
+        buttons.forEach(btn => {
+          if (btn.textContent === char) {
+            btn.classList.add('active');
+          }
+        });
+      }
+    }
+    
+    // Update progress bar and text
+    function updateProgress() {
+      const progress = (learnedChars.length / hsk1Data.length) * 100;
+      progressBar.style.width = `${progress}%`;
+      progressText.textContent = `${learnedChars.length}/${hsk1Data.length} characters learned`;
+    }
+    
+    // Shuffle character buttons
+    function shuffleCharacters() {
+      const buttons = Array.from(container.children);
+      buttons.sort(() => Math.random() - 0.5);
+      container.innerHTML = '';
+      buttons.forEach(btn => container.appendChild(btn));
+    }
+    
+    // Start a simple quiz
+    function startQuiz() {
+      if (learnedChars.length === 0) {
+        alert("Learn some characters first before starting a quiz!");
+        return;
+      }
+      
+      const randomChar = learnedChars[Math.floor(Math.random() * learnedChars.length)];
+      const data = hsk1Data.find(d => d.char === randomChar);
+      
+      if (data) {
+        const answer = prompt(`What is the pinyin for "${randomChar}"?`);
+        if (answer && normalizePinyin(answer) === normalizePinyin(data.pinyin)) {
+          alert("Correct! Well done!");
+        } else {
+          alert(`Incorrect. The correct pinyin is "${data.pinyin}".`);
+        }
+      }
+    }
+    
+    // Reset progress
+    function resetProgress() {
+      if (confirm("Are you sure you want to reset all progress?")) {
+        learnedChars = [];
+        localStorage.removeItem('learnedChars');
+        updateProgress();
+        createCharacterButtons();
+      }
+    }
+    
+    // Initialize the app when the page loads
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
